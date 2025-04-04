@@ -38,7 +38,7 @@ public class AuthService {
 
     public AuthResponse login(AuthRequest authRequest){
         Optional<User> user = userRepository.findByUsername(authRequest.username());
-        if (user.isEmpty() || !passwordEncoder.matches(authRequest.password(),user.get().getPassword())) {
+        if (user.isEmpty() || !passwordEncoder.matches(authRequest.password(), user.get().getPassword())) {
             throw new RuntimeException("Invalid username or password");
         }
 

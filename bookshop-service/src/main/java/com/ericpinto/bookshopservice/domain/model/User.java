@@ -2,14 +2,16 @@ package com.ericpinto.bookshopservice.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class User {
 
     @Id
@@ -19,9 +21,9 @@ public class User {
     private String password;
 
     public static User create(String username, String password) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        return user;
+       return User.builder()
+               .username(username)
+               .password(password)
+               .build();
     }
 }
