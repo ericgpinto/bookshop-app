@@ -3,6 +3,8 @@ package com.ericpinto.bookshopservice.application.service;
 import com.ericpinto.bookshopservice.application.dto.AuthRequest;
 import com.ericpinto.bookshopservice.application.dto.AuthResponse;
 import com.ericpinto.bookshopservice.application.dto.RegisterRequest;
+import com.ericpinto.bookshopservice.application.exception.InvalidCredentialsException;
+import com.ericpinto.bookshopservice.application.exception.UsernameAlreadyExistsException;
 import com.ericpinto.bookshopservice.domain.model.User;
 import com.ericpinto.bookshopservice.domain.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +27,7 @@ public class AuthService {
 
     public String register(RegisterRequest registerRequest) {
         if (userRepository.findByUsername(registerRequest.username()).isPresent()) {
-            throw new RuntimeException("Username is already in use");
+            throw new UsernameAlreadyExistsException("Username is already in use");
         }
 
         User user = User.create(registerRequest.username(),
@@ -39,7 +41,7 @@ public class AuthService {
     public AuthResponse login(AuthRequest authRequest){
         Optional<User> user = userRepository.findByUsername(authRequest.username());
         if (user.isEmpty() || !passwordEncoder.matches(authRequest.password(), user.get().getPassword())) {
-            throw new RuntimeException("Invalid username or password");
+            throw new InvalidCredentialsException("Invalid username or password");
         }
 
         String token = jwtService.generateToken(authRequest.username());
