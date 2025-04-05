@@ -1,10 +1,13 @@
 package com.ericpinto.bookshopservice.infrastructure.controller;
 
+import com.ericpinto.bookshopservice.application.dto.BookFilterDTO;
 import com.ericpinto.bookshopservice.application.dto.request.BookRequest;
 import com.ericpinto.bookshopservice.application.dto.response.BookResponse;
 import com.ericpinto.bookshopservice.application.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +34,9 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<BookResponse>> getAll(@RequestParam(defaultValue = "0") Integer page,
-                                                     @RequestParam(defaultValue = "10") Integer size) {
-        return ResponseEntity.ok(bookService.findAll(page, size));
+    public ResponseEntity<Page<BookResponse>> getAll( @ModelAttribute BookFilterDTO filter,
+                                                      @PageableDefault(size = 10, sort = "title") Pageable pageable) {
+        return ResponseEntity.ok(bookService.findAll(filter, pageable));
     }
 
     @PatchMapping("/{id}")
