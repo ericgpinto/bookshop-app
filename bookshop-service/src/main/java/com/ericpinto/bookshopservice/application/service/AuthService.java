@@ -1,8 +1,8 @@
 package com.ericpinto.bookshopservice.application.service;
 
-import com.ericpinto.bookshopservice.application.dto.AuthRequest;
-import com.ericpinto.bookshopservice.application.dto.AuthResponse;
-import com.ericpinto.bookshopservice.application.dto.RegisterRequest;
+import com.ericpinto.bookshopservice.application.dto.request.AuthRequest;
+import com.ericpinto.bookshopservice.application.dto.response.AuthResponse;
+import com.ericpinto.bookshopservice.application.dto.request.RegisterRequest;
 import com.ericpinto.bookshopservice.application.exception.InvalidCredentialsException;
 import com.ericpinto.bookshopservice.application.exception.UsernameAlreadyExistsException;
 import com.ericpinto.bookshopservice.domain.model.User;
