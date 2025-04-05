@@ -2,6 +2,7 @@ package com.ericpinto.bookshopservice.application.service;
 
 import com.ericpinto.bookshopservice.application.dto.request.BookRequest;
 import com.ericpinto.bookshopservice.application.dto.response.BookResponse;
+import com.ericpinto.bookshopservice.application.exception.BookAlreadyRentedException;
 import com.ericpinto.bookshopservice.application.exception.ObjectNotFoundException;
 import com.ericpinto.bookshopservice.domain.model.Book;
 import com.ericpinto.bookshopservice.domain.repository.BookRepository;
@@ -39,14 +40,13 @@ public class BookService {
     }
 
     public void rent(Long id) {
-        Book book = toModel(findById(id));
+        Book book = bookRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Book not found"));
 
         if (book.getIsRented()){
-            throw new RuntimeException("Rent already rated");
+            throw new BookAlreadyRentedException("Book already rented.");
         }
 
-        book.setIsRented(true);
-
+        book.rent();
         bookRepository.save(book);
     }
 
@@ -71,6 +71,6 @@ public class BookService {
     }
 
     private BookResponse toResponse(Book book) {
-        return new BookResponse(book.getId(), book.getTitle(), book.getAuthor(), book.getGender(), book.getYear());
+        return new BookResponse(book.getId(), book.getTitle(), book.getAuthor(), book.getGender(), book.getYear(), book.getIsRented());
     }
 }

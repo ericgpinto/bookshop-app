@@ -22,7 +22,15 @@ public class Book {
     private String gender;
     @Column(nullable = false)
     private Integer year;
-    private Boolean isRented = false;
+    private Boolean isRented;
+
+    public void rent() {
+        this.isRented = true;
+    }
+
+    public void unRent() {
+        this.isRented = false;
+    }
 
     public static Book save(String title, String author, String gender, Integer year) {
         return Book.builder()
@@ -30,6 +38,7 @@ public class Book {
                 .author(author)
                 .gender(gender)
                 .year(year)
+                .isRented(false)
                 .build();
     }
 }

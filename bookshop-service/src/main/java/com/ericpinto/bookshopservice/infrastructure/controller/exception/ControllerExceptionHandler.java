@@ -1,6 +1,8 @@
 package com.ericpinto.bookshopservice.infrastructure.controller.exception;
 
+import com.ericpinto.bookshopservice.application.exception.BookAlreadyRentedException;
 import com.ericpinto.bookshopservice.application.exception.InvalidCredentialsException;
+import com.ericpinto.bookshopservice.application.exception.ObjectNotFoundException;
 import com.ericpinto.bookshopservice.application.exception.UsernameAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,8 @@ import java.util.Map;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(UsernameAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleUsernameAlreadyExistsException(UsernameAlreadyExistsException e) {
+    @ExceptionHandler({UsernameAlreadyExistsException.class, BookAlreadyRentedException.class})
+    public ResponseEntity<ErrorResponse> handleUsernameAlreadyExistsException(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ErrorResponse.builder()
                         .message(e.getMessage())
@@ -25,6 +27,14 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleInvalidCredentialsException(InvalidCredentialsException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorResponse.builder()
+                        .message(e.getMessage())
+                        .build());
+    }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleObjectNotFoundException(ObjectNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ErrorResponse.builder()
                         .message(e.getMessage())
                         .build());
