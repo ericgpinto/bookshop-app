@@ -1,6 +1,6 @@
 package com.ericpinto.bookshopservice.infrastructure.controller;
 
-import com.ericpinto.bookshopservice.application.dto.BookFilterDTO;
+import com.ericpinto.bookshopservice.application.dto.filter.BookFilterDTO;
 import com.ericpinto.bookshopservice.application.dto.request.BookRequest;
 import com.ericpinto.bookshopservice.application.dto.response.BookResponse;
 import com.ericpinto.bookshopservice.application.service.BookService;

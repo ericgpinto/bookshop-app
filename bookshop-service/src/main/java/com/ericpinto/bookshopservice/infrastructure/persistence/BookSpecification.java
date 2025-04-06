@@ -1,6 +1,6 @@
 package com.ericpinto.bookshopservice.infrastructure.persistence;
 
-import com.ericpinto.bookshopservice.application.dto.BookFilterDTO;
+import com.ericpinto.bookshopservice.application.dto.filter.BookFilterDTO;
 import com.ericpinto.bookshopservice.domain.model.Book;
 import org.springframework.data.jpa.domain.Specification;
 
