@@ -1,6 +1,7 @@
-package com.ericpinto.bookshopservice.infrastructure.security;
+package com.ericpinto.bookshopservice.infrastructure.config;
 
 import com.ericpinto.bookshopservice.application.service.UserDetailsServiceImpl;
+import com.ericpinto.bookshopservice.infrastructure.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
