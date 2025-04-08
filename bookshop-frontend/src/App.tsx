@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./routes";
-import Books from "./pages/Books";
 import BookDetail from "./pages/Login";
 import Login from "./pages/Login";
+import BookList from "./pages/BookList";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         path="/"
         element={
           <PrivateRoute>
-            <Books />
+            <BookList />
           </PrivateRoute>
         }
       />
