@@ -61,6 +61,25 @@ function BookList() {
     fetchBooks();
   };
 
+  const handleDelete = async (id: number) => {
+    const token = localStorage.getItem("token");
+    const confirm = window.confirm(
+      "Tem certeza que deseja excluir este livro?"
+    );
+    if (!confirm) return;
+
+    try {
+      await axios.delete(`http://localhost:8080/books/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      fetchBooks();
+    } catch {
+      alert("Erro ao excluir livro");
+    }
+  };
+
   return (
     <div className="p-6">
       <Header
@@ -69,7 +88,7 @@ function BookList() {
         onFilter={handleFilter}
         onAddBook={() => setShowModal(true)}
       />
-      <BookTable books={books} />
+      <BookTable books={books} onDelete={handleDelete} />
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
