@@ -1,6 +1,6 @@
 # 📚 Bookshop App
 
-Sistemagerenciamento de livros com funcionalidades de aluguel, utilizando arquitetura fullstack com:
+Sistema gerenciamento de livros com funcionalidades de aluguel, utilizando arquitetura fullstack com:
 
 - **Frontend:** React + Vite + Tailwind CSS + shadcn/ui
 - **Backend:** Spring Boot (Java 17) + PostgreSQL
