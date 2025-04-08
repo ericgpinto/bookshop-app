@@ -3,7 +3,7 @@ package com.ericpinto.bookshopservice.application.service;
 import com.ericpinto.bookshopservice.application.dto.filter.BookFilterDTO;
 import com.ericpinto.bookshopservice.application.dto.request.BookRequest;
 import com.ericpinto.bookshopservice.application.dto.response.BookResponse;
-import com.ericpinto.bookshopservice.application.exception.BookAlreadyRentedException;
+import com.ericpinto.bookshopservice.application.exception.BookRentedException;
 import com.ericpinto.bookshopservice.application.exception.ObjectNotFoundException;
 import com.ericpinto.bookshopservice.domain.model.Book;
 import com.ericpinto.bookshopservice.domain.repository.BookRepository;
@@ -42,7 +42,7 @@ public class BookService {
         Book book = bookRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Book not found"));
 
         if (book.getIsRented()){
-            throw new BookAlreadyRentedException("Book already rented.");
+            throw new BookRentedException("Book already rented.");
         }
 
         book.rent();
@@ -60,7 +60,7 @@ public class BookService {
         Book book = bookRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Book not found"));
 
         if (book.getIsRented()){
-            throw new BookAlreadyRentedException("Book is rented.");
+            throw new BookRentedException("Book is rented.");
         }
 
         bookRepository.deleteById(book.getId());

@@ -1,6 +1,6 @@
 package com.ericpinto.bookshopservice.infrastructure.controller.exception;
 
-import com.ericpinto.bookshopservice.application.exception.BookAlreadyRentedException;
+import com.ericpinto.bookshopservice.application.exception.BookRentedException;
 import com.ericpinto.bookshopservice.application.exception.InvalidCredentialsException;
 import com.ericpinto.bookshopservice.application.exception.ObjectNotFoundException;
 import com.ericpinto.bookshopservice.application.exception.UsernameAlreadyExistsException;
@@ -16,7 +16,7 @@ import java.util.Map;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler({UsernameAlreadyExistsException.class, BookAlreadyRentedException.class})
+    @ExceptionHandler({UsernameAlreadyExistsException.class, BookRentedException.class})
     public ResponseEntity<ErrorResponse> handleUsernameAlreadyExistsException(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ErrorResponse.builder()

@@ -2,7 +2,7 @@ package com.ericpinto.bookshopservice.application.service;
 
 import com.ericpinto.bookshopservice.application.dto.request.BookRequest;
 import com.ericpinto.bookshopservice.application.dto.response.BookResponse;
-import com.ericpinto.bookshopservice.application.exception.BookAlreadyRentedException;
+import com.ericpinto.bookshopservice.application.exception.BookRentedException;
 import com.ericpinto.bookshopservice.application.exception.ObjectNotFoundException;
 import com.ericpinto.bookshopservice.domain.model.Book;
 import com.ericpinto.bookshopservice.domain.repository.BookRepository;
@@ -91,7 +91,7 @@ class BookServiceTest {
     @Test
     void shouldThrowExceptionWhenBookAlreadyRented(){
         when(bookRepository.findById(2L)).thenReturn(Optional.of(book2));
-        Exception exception = assertThrows(BookAlreadyRentedException.class, () -> bookService.rent(2L));
+        Exception exception = assertThrows(BookRentedException.class, () -> bookService.rent(2L));
 
         assertEquals("Book already rented.", exception.getMessage());
     }
@@ -108,7 +108,7 @@ class BookServiceTest {
     @Test
     void shouldThrowExceptionWhenTryDeleteRentedBook(){
         when(bookRepository.findById(2L)).thenReturn(Optional.of(book2));
-        Exception exception = assertThrows(BookAlreadyRentedException.class, () -> bookService.deleteById(2L));
+        Exception exception = assertThrows(BookRentedException.class, () -> bookService.deleteById(2L));
 
         assertEquals("Book is rented.", exception.getMessage());
     }
