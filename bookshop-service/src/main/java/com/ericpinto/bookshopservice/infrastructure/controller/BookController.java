@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -39,9 +40,15 @@ public class BookController {
         return ResponseEntity.ok(bookService.findAll(filter, pageable));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/rent")
     public ResponseEntity<Void> rent(@PathVariable Long id) {
         bookService.rent(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/unrent")
+    public ResponseEntity<Void> unRent(@PathVariable Long id) {
+        bookService.unrent(id);
         return ResponseEntity.noContent().build();
     }
 

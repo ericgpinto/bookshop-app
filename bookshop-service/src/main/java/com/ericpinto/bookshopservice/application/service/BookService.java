@@ -49,6 +49,13 @@ public class BookService {
         bookRepository.save(book);
     }
 
+    public void unrent(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Book not found"));
+
+        book.unRent();
+        bookRepository.save(book);
+    }
+
     public void deleteById(Long id) {
         Book book = bookRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Book not found"));
 
