@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
 
 interface Props {
   isOpen: boolean;
@@ -31,7 +32,7 @@ function AddBookModal({ isOpen, onClose, onBookAdded }: Props) {
       });
       onBookAdded();
     } catch {
-      alert("Erro ao adicionar livro");
+      toast.error("Erro ao adicionar livro.");
     }
   };
 

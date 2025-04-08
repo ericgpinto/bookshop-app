@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import BookTable from "../components/BookTable";
 import Pagination from "../components/Pagination";
 import AddBookModal from "@/components/AddBookModal";
+import { toast } from "sonner";
 
 interface Book {
   id: number;
@@ -48,7 +49,7 @@ function BookList() {
       setBooks(res.data.content);
       setTotalPages(res.data.totalPages);
     } catch {
-      alert("Erro ao buscar livros");
+      toast.error("Erro ao buscar livros.");
     }
   };
 
@@ -76,7 +77,7 @@ function BookList() {
       });
       fetchBooks();
     } catch {
-      alert("Erro ao excluir livro");
+      toast.error("Erro ao excluir livro");
     }
   };
 

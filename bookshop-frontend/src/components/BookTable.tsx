@@ -1,4 +1,3 @@
-// src/components/BookTable.tsx
 import { useNavigate } from "react-router-dom";
 
 interface Book {
