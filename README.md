@@ -10,6 +10,9 @@ Sistema completo para gerenciamento de livros com funcionalidades de aluguel, ut
 
 ## ✨ Funcionalidades
 
+- Cadastro de usuário
+- Autenticação via JWT
+- Cadastro de usuário
 - Listagem de livros com filtros e paginação
 - Visualização de detalhes do livro
 - Aluguel e devolução de livros
