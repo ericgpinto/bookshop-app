@@ -1,77 +1,71 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
-function Login() {
+function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-
+  const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:8080/auth/login", {
-        username,
-        password,
+      const response = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
       });
 
-      localStorage.setItem("token", response.data.token);
-      navigate("/");
-    } catch (err) {
-      const axiosError = err as AxiosError<{ message: string }>;
-      setError(axiosError.response?.data?.message || "Erro ao autenticar");
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+        toast.success("Login realizado com sucesso!");
+        navigate("/");
+      } else {
+        toast.error("Usuário ou senha inválidos");
+      }
+    } catch (error) {
+      console.log("Erro ao conectar com o servidor", error);
+      toast.error("Erro ao conectar com o servidor");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleLogin}
-        className="space-y-6 p-8 w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-xl"
+    <div className="flex flex-col items-center justify-center h-screen space-y-4 px-4">
+      <h1 className="text-3xl font-bold">Login</h1>
+
+      <input
+        type="text"
+        placeholder="Usuário"
+        className="border px-4 py-2 rounded w-80"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+
+      <input
+        type="password"
+        placeholder="Senha"
+        className="border px-4 py-2 rounded w-80"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button
+        onClick={handleLogin}
+        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
       >
-        <h1 className="text-3xl font-bold text-center">Login</h1>
+        Entrar
+      </button>
 
-        <div>
-          <Label htmlFor="username">Usuário</Label>
-          <Input
-            id="username"
-            type="text"
-            className="w-full"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="password">Senha</Label>
-          <Input
-            id="password"
-            type="password"
-            className="w-full"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-
-        <Button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
-        >
-          Entrar
-        </Button>
-      </form>
+      <p className="text-sm">
+        Ainda não tem uma conta?{" "}
+        <a href="/register" className="text-blue-500 underline">
+          Cadastre-se
+        </a>
+      </p>
     </div>
   );
 }
 
-export default Login;
+export default LoginPage;
